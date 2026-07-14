@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Ritika ✨</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-canvas: #fdfbf7;
+            --color-friends: #fbeee6;
+            --color-us: #f2d6ce;
+            --color-vault: #1a1c1e;
+            --text-dark: #2c2a29;
+            --text-light: #fdfbf7;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--color-canvas);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            overflow-y: hidden; 
+        }
+
+        /* 1. MESH GRADIENT ENTRANCE */
+        #gift-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+            background-size: 400% 400%; animation: gradientBG 15s ease infinite;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.6s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #gift-overlay h2 {
+            font-family: 'Pacifico', cursive; font-size: 4.5rem; 
+            color: #fff; margin-bottom: 60px; font-weight: normal; letter-spacing: 2px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.15); text-align: center;
+        }
+        
+        #gift-overlay p {
+            font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-top: -40px; margin-bottom: 50px;
+            font-style: italic; font-weight: bold;
+        }
+
+        .gift-wrapper {
+            position: relative; width: 300px; height: 300px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* SIMPLE RELIABLE GIFT BOX */
+        #gift-box {
+            position: absolute; cursor: pointer; transition: transform 0.2s ease-out;
+            width: 140px; height: 120px; background: #ff4d6d;
+            border-radius: 4px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.4);
+            animation: breathe 3s ease-in-out infinite; z-index: 10;
+        }
+        #gift-box:hover { animation: wiggle 0.4s ease-in-out infinite; transform: scale(1.1); }
+        
+        #gift-box::before {
+            content: ''; position: absolute; top: -20px; left: -10px; right: -10px; height: 30px;
+            background: #ff2a55; border-radius: 4px; box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        #gift-box::after {
+            content: ''; position: absolute; left: 55px; right: 55px; top: -20px; bottom: 0;
+            background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        .ribbon-bow {
+            position: absolute; top: -45px; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 30px; display: flex; justify-content: space-between;
+        }
+        .ribbon-bow::before, .ribbon-bow::after {
+            content: ''; width: 25px; height: 25px; border: 4px solid #fff;
+            border-radius: 50% 50% 0 50%; transform: rotate(-45deg);
+        }
+        .ribbon-bow::after { border-radius: 50% 50% 50% 0; transform: rotate(45deg); }
+
+        @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes wiggle { 0%, 100% { transform: rotate(0deg) scale(1.1); } 25% { transform: rotate(-5deg) scale(1.1); } 75% { transform: rotate(5deg) scale(1.1); } }
+
+        /* 2. PARALLAX ASSETS */
+        .doodle {
+            position: absolute; pointer-events: none; z-index: 1; opacity: 0.5;
+            background-size: contain; background-repeat: no-repeat;
+            transform: translateY(calc(var(--scroll-amount) * var(--speed))) rotate(var(--rot));
+        }
+        .doodle.star { width: 40px; height: 40px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffb7b2'%3E%3Cpath d='M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z'/%3E%3C/svg%3E"); }
+        .doodle.sparkle { width: 50px; height: 50px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff9a9e' stroke-width='2'%3E%3Cpath d='M12 2v20M2 12h20M5 5l14 14M5 19L19 5'/%3E%3C/svg%3E"); }
+        
+        .floating-r {
+            position: absolute; width: clamp(120px, 15vw, 200px); height: auto;
+            border: 8px solid white; box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-radius: 2px; z-index: 2; cursor: pointer;
+            transform: translateY(calc(var(--scroll-amount) * var(--speed))) rotate(var(--rot));
+            transition: border-color 0.3s;
+        }
+        .floating-r:hover { border-color: #ff6b8b; z-index: 10; }
+        .floating-r img { width: 100%; display: block; }
+
+        /* 3. STRUCTURAL SECTIONS */
+        section {
+            position: relative; min-height: 100vh; padding: 120px max(4vw, 20px) 150px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        .fancy-divider {
+            width: 85%; max-width: 800px; height: 3px;
+            background: linear-gradient(90deg, transparent, #ff6b8b, transparent);
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            border-radius: 5px; opacity: 0.8; z-index: 10;
+        }
+        .fancy-divider::after {
+            content: '✨'; position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+            font-size: 1.8rem; color: #ff6b8b;
+        }
+
+        .section-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: normal; text-align: center; margin-bottom: 60px; letter-spacing: -1px; }
+        .message-block { max-width: 650px; font-size: 1.35rem; line-height: 1.8; text-align: center; margin: 40px auto; font-style: italic; opacity: 0.9; position: relative; z-index: 4; }
+
+        /* 3D TILT CARDS */
+        .tilt-card { perspective: 1000px; transform-style: preserve-3d; }
+        .tilt-inner {
+            width: 100%; height: 100%; background: #fff; padding: 16px 16px 40px 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-radius: 2px;
+            transform: rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg)) scale(var(--scale, 1));
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+        }
+        .tilt-card:hover .tilt-inner { --scale: 1.05; box-shadow: 0 30px 60px rgba(0,0,0,0.15); z-index: 5; position: relative; }
+        .tilt-inner img { width: 100%; height: auto; object-fit: cover; display: block; }
+
+        /* SECTION 1: HER ART CANVAS */
+        #her-canvas { background-color: var(--color-canvas); }
+        .cozy-subtitle { 
+            font-family: 'Pacifico', cursive; color: #ff6b8b; font-size: 1.8rem; 
+            margin-bottom: -15px; z-index: 2; transform: rotate(-3deg); text-align: center; line-height: 1.4;
+        }
+        
+        .gallery-art { display: grid; grid-template-columns: repeat(12, 1fr); gap: 40px; max-width: 1200px; width: 100%; }
+        .img-1 { grid-column: 2 / 12; }
+        .img-2 { grid-column: 1 / 6; transform: rotate(-2deg); }
+        .img-3 { grid-column: 7 / 13; transform: rotate(3deg); }
+        .img-4 { grid-column: 2 / 7; transform: rotate(1deg); }
+        .img-5 { grid-column: 8 / 12; transform: rotate(-3deg); }
+        .img-65 { grid-column: 1 / 6; transform: rotate(2deg); }
+        .img-6 { grid-column: 7 / 13; }
+        .img-7 { grid-column: 2 / 7; transform: rotate(-1deg); }
+        .img-8 { grid-column: 8 / 12; transform: rotate(4deg); }
+
+        /* SECTION 2: FRIENDS & FAMILY */
+        #friends { background-color: var(--color-friends); }
+        .friends-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 50px; max-width: 1000px; width: 100%; }
+        .tilt-inner.friend-card { padding: 12px; }
+        .friend-card img { height: 450px; object-fit: cover; }
+        .friend-wide { grid-column: span 2; }
+        .friend-wide img { height: auto; max-height: 700px; object-fit: contain; } 
+
+        .goofy-btn {
+            background: #ffd93d; color: #000; padding: 15px 30px; font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-weight: bold; border: none; border-radius: 5px; box-shadow: 4px 4px 0 #000;
+            transform: rotate(-3deg); cursor: pointer; margin: 0 0 60px 0; transition: transform 0.2s; position: relative; z-index: 10;
+        }
+        .goofy-btn:hover { transform: scale(1.05) rotate(2deg); }
+
+        /* SECURE ZONE: GLASS LOCK SCREEN */
+        #secure-zone { position: relative; width: 100%; overflow: hidden; height: 100vh; }
+        #lock-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            z-index: 50; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease;
+        }
+        .lock-box {
+            background: rgba(255, 255, 255, 0.8); padding: 50px; border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1); text-align: center; border: 1px solid rgba(255,255,255,0.5);
+        }
+        .lock-box h2 { font-size: 2rem; margin-bottom: 10px; }
+        .lock-box p { color: #666; margin-bottom: 30px; font-style: italic; }
+        .lock-box input {
+            padding: 15px 25px; font-size: 1.2rem; border: 2px solid #ddd; border-radius: 30px;
+            outline: none; text-align: center; width: 250px; transition: border-color 0.3s;
+        }
+        .lock-box input:focus { border-color: #ff6b8b; }
+
+        /* SECTION 3: US TOGETHER */
+        #us { background-color: var(--color-us); overflow: hidden; position: relative; }
+        .us-showcase { display: flex; flex-direction: column; gap: 100px; max-width: 900px; width: 100%; z-index: 3; }
+        .us-row { display: flex; align-items: center; gap: 60px; }
+        .us-row:nth-child(even) { flex-direction: row-reverse; }
+        .us-text { flex: 1; font-size: 1.4rem; line-height: 1.7; position: relative; z-index: 4; }
+        
+        .filmstrip-card { grid-column: span 2; background: #111; padding: 30px 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.2); display: flex; justify-content: center; position: relative; z-index: 4; }
+        .filmstrip-card img { max-width: 100%; height: auto; }
+
+        .falling-heart { position: fixed; top: -50px; pointer-events: none; z-index: 99; animation: heartFall linear forwards; text-shadow: 0 0 10px rgba(255,0,0,0.3); }
+        @keyframes heartFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* SECTION 4: THE VAULT */
+        #vault { background-color: var(--color-vault); color: var(--text-light); }
+        .vault-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; max-width: 1200px; width: 100%; margin-top: 50px; }
+        .vault-thumb {
+            aspect-ratio: 9/16; background: #2a2c2e; border-radius: 8px; overflow: hidden; cursor: pointer;
+            border: 2px solid transparent; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s;
+        }
+        .vault-thumb:hover { transform: scale(1.1); border-color: #ff6b8b; z-index: 10; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .vault-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: opacity 0.3s; }
+        .vault-thumb:hover img { opacity: 1; }
+
+        /* FOOTER */
+        .site-footer {
+            background-color: var(--color-vault); text-align: center; padding: 80px 20px 120px;
+            color: rgba(255,255,255,0.7); font-style: italic; font-size: 1.3rem; line-height: 1.8;
+        }
+        .site-footer .heart { color: #ff6b8b; font-style: normal; font-size: 1.5rem; display: inline-block; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+        /* LIGHTBOX */
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        #lightbox.active { opacity: 1; pointer-events: auto; }
+        #lightbox img { max-width: 90%; max-height: 90vh; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+        .close-lightbox { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 3rem; cursor: pointer; transition: transform 0.2s; }
+        .close-lightbox:hover { transform: scale(1.2); }
+
+        /* AUDIO HUD */
+        #audio-hud {
+            position: fixed; bottom: 30px; left: 30px; background: rgba(255,255,255,0.9);
+            padding: 12px 25px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            z-index: 999; display: flex; align-items: center; gap: 15px; backdrop-filter: blur(10px);
+            font-family: sans-serif;
+        }
+        #audio-hud button { border: none; background: #ff6b8b; color: white; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: transform 0.2s; }
+        #audio-hud button:hover { transform: scale(1.05); }
+
+        @media(max-width: 768px) {
+            .gallery-art, .friends-grid, .us-row { display: flex; flex-direction: column; }
+            .tilt-inner { transform: none !important; }
+            .doodle, .floating-r { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO PLAYERS -->
+    <audio id="playerA" loop preload="none"></audio>
+    <audio id="playerB" loop preload="none"></audio>
+
+    <!-- AUDIO HUD -->
+    <div id="audio-hud" style="display: none;">
+        <span id="track-name">🎵 Loading...</span>
+        <button onclick="toggleGlobalMute()" id="mute-btn">Pause</button>
+    </div>
+
+    <!-- GIFT ENTRANCE -->
+    <div id="gift-overlay">
+        <h2>A Gift For You</h2>
+        <p>(Click to open)</p>
+        <div class="gift-wrapper" id="gift-wrapper">
+            <div id="gift-box">
+                <div class="ribbon-bow"></div>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-content">
+        
+        <!-- SECTION 1 -->
+        <section id="her-canvas" data-song="I Thought I Saw Your Face Today.mp3">
+            <div class="doodle star" style="top: 15%; left: 8%; --speed: -0.15; --rot: 15deg;"></div>
+            <div class="doodle sparkle" style="top: 40%; right: 10%; --speed: 0.2; --rot: -10deg;"></div>
+            <div class="doodle star" style="top: 75%; left: 5%; --speed: -0.1; --rot: 45deg;"></div>
+            <div class="doodle sparkle" style="top: 85%; right: 12%; --speed: 0.25; --rot: 5deg;"></div>
+
+            <div class="cozy-subtitle">
+                15th july, the bestest day ^~^ <br> 
+                and 2026, the bestestest year ( ͡❛ ‿‿ ͡❛)
+            </div>
+            <h1 class="section-title">Happy Birthday, Ritika ✨</h1>
+            <div class="message-block">"To the one who frames life in the most vivid colors. Here is a gallery dedicated purely to you."</div>
+
+            <div class="gallery-art">
+                <div class="tilt-card img-1"><div class="tilt-inner"><img src="1.jpeg" loading="lazy"></div></div>
+                <div class="tilt-card img-2"><div class="tilt-inner"><img src="2.jpeg" loading="lazy"></div></div>
+                <div class="tilt-card img-3"><div class="tilt-inner"><img src="3.jpeg" loading="lazy"></div></div>
+                <div class="tilt-card img-4"><div class="tilt-inner"><img src="4.jpeg" loading="lazy"></div></div>
+                <div class="tilt-card img-5"><div class="tilt-inner"><img src="5.jpg" loading="lazy"></div></div>
+                <div class="tilt-card img-65"><div class="tilt-inner"><img src="6.5.jpeg" loading="lazy"></div></div>
+                <div class="tilt-card img-6"><div class="tilt-inner"><img src="6.jpg" loading="lazy"></div></div>
+                <div class="tilt-card img-7"><div class="tilt-inner"><img src="7.jpg" loading="lazy"></div></div>
+                <div class="tilt-card img-8"><div class="tilt-inner"><img src="8.jpeg" loading="lazy"></div></div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="friends" data-song="Jaane Bhi De.mp3">
+            <div class="fancy-divider"></div>
+            <div class="doodle star" style="top: 20%; right: 5%; --speed: 0.18; --rot: 20deg;"></div>
+            <div class="doodle sparkle" style="top: 60%; left: 8%; --speed: -0.2; --rot: -15deg;"></div>
+
+            <h1 class="section-title">The Laughs Shared</h1>
+            <div class="message-block">"Surrounded by the people who know exactly how bright your light shines."</div>
+
+            <button class="goofy-btn" onclick="triggerFriendSong()">I called your friends asking for a song but no one picked up 📞</button>
+
+            <div class="friends-grid">
+                <div class="tilt-card friend-wide"><div class="tilt-inner friend-card"><img src="f1.jpg" loading="lazy"></div></div>
+                <div class="tilt-card"><div class="tilt-inner friend-card"><img src="f2.jpg" loading="lazy"></div></div>
+                <div class="tilt-card"><div class="tilt-inner friend-card"><img src="f3.jpg" loading="lazy"></div></div>
+                <div class="tilt-card friend-wide"><div class="tilt-inner friend-card"><img src="f4.jpg" loading="lazy"></div></div>
+                <div class="tilt-card friend-wide"><div class="tilt-inner friend-card"><img src="f5.jpg" loading="lazy"></div></div>
+                <div class="tilt-card friend-wide"><div class="tilt-inner friend-card"><img src="f6.jpeg" loading="lazy"></div></div>
+            </div>
+        </section>
+
+        <!-- SECURE ZONE -->
+        <div id="secure-zone">
+            <div id="lock-screen">
+                <div class="lock-box">
+                    <h2>🔐 Secret Vault</h2>
+                    <p>Hint: A name you gave US</p>
+                    <input type="text" id="password-input" placeholder="Type here..." autocomplete="off">
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <section id="us" data-song="Somethin' Stupid.mp3">
+                <div class="fancy-divider"></div>
+                <div class="doodle sparkle" style="top: 10%; right: 15%; --speed: 0.3; --rot: 40deg;"></div>
+                
+                <div class="floating-r" style="top: 8%; left: 4%; --speed: -0.04; --rot: -12deg;" onclick="openLightbox('vault/r1.jpeg')"><img src="vault/r1.jpeg" loading="lazy"></div>
+                <div class="floating-r" style="top: 22%; right: 3%; --speed: 0.05; --rot: 15deg;" onclick="openLightbox('vault/r2.jpeg')"><img src="vault/r2.jpeg" loading="lazy"></div>
+                <div class="floating-r" style="top: 38%; left: 6%; --speed: -0.03; --rot: 8deg;" onclick="openLightbox('vault/r3.jpeg')"><img src="vault/r3.jpeg" loading="lazy"></div>
+                <div class="floating-r" style="top: 55%; right: 5%; --speed: 0.06; --rot: -5deg;" onclick="openLightbox('vault/r4.jpeg')"><img src="vault/r4.jpeg" loading="lazy" onerror="this.style.display='none'"></div>
+                <div class="floating-r" style="top: 70%; left: 3%; --speed: -0.02; --rot: 10deg;" onclick="openLightbox('vault/r5.jpeg')"><img src="vault/r5.jpeg" loading="lazy" onerror="this.style.display='none'"></div>
+                <div class="floating-r" style="top: 85%; right: 6%; --speed: 0.04; --rot: -15deg;" onclick="openLightbox('vault/r6.jpeg')"><img src="vault/r6.jpeg" loading="lazy" onerror="this.style.display='none'"></div>
+                <div class="floating-r" style="top: 96%; left: 5%; --speed: -0.05; --rot: 5deg;" onclick="openLightbox('vault/r7.jpeg')"><img src="vault/r7.jpeg" loading="lazy" onerror="this.style.display='none'"></div>
+                
+                <h1 class="section-title" style="font-family: 'Pacifico', cursive;">You & Me ❤️</h1>
+                <div class="message-block">"No matter how many miles sit between us right now, each memory we made binds us together."</div>
+
+                <div class="us-showcase">
+                    <div class="tilt-card filmstrip-card"><img src="us5.jpeg" loading="lazy"></div>
+                    <div class="us-row">
+                        <div class="tilt-card us-img-wrapper"><div class="tilt-inner"><img src="us1.jpg" loading="lazy"></div></div>
+                        <div class="us-text">Every single drive, every dynamic conversation...</div>
+                    </div>
+                    <div class="us-row">
+                        <div class="tilt-card us-img-wrapper"><div class="tilt-inner"><img src="us2.jpg" loading="lazy"></div></div>
+                        <div class="us-text">The quiet walks where the world just completely fades away.</div>
+                    </div>
+                    <div class="us-row">
+                        <div class="tilt-card us-img-wrapper"><div class="tilt-inner"><img src="us3.jpg" loading="lazy"></div></div>
+                        <div class="us-text">Sitting right next to you is my absolute favorite place to be. Always.</div>
+                    </div>
+                    
+                    <div class="us-row">
+                        <div class="tilt-card us-img-wrapper" style="flex: 1.6;"><div class="tilt-inner"><img src="us4.jpeg" loading="lazy" style="transform: scale(1.05);"></div></div>
+                        <div class="us-text">Every little detail remembered.</div>
+                    </div>
+                    <div class="us-row">
+                        <div class="tilt-card us-img-wrapper"><div class="tilt-inner"><img src="us 1.5.jpeg" loading="lazy"></div></div>
+                        <div class="us-text">Peace.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section id="vault" data-song="Pal Pal Har Pal.mp3">
+                <div class="fancy-divider"></div>
+                
+                <h1 class="section-title">The Vault</h1>
+                <div class="message-block">"A tiny collection of our late-night scripts, internal jokes, and everything in between."</div>
+
+                <div class="vault-grid" id="vault-grid"></div>
+            </section>
+            
+            <!-- LOVELY FOOTER -->
+            <footer class="site-footer">
+                <p>Thank you for bringing so much light into my world.<br> Bahut rush me bana hai and with a whole lotta love ^u^<span class="heart">❤️</span>.</p>
+            </footer>
+        </div>
+    </main>
+
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script>
+        // --- 1. AUDIO CROSSFADER ---
+        const pA = document.getElementById('playerA');
+        const pB = document.getElementById('playerB');
+        let activePlayer = pA;
+        let currentTrack = "";
+        let isGloballyMuted = false;
+        let crossfadeInterval = null; 
+
+        function playCrossfade(newSrc, title) {
+            if (currentTrack === newSrc) return; 
+            currentTrack = newSrc;
+            document.getElementById('track-name').innerText = title || "🎵 " + newSrc.split('.')[0];
+            
+            const fadeOutPlayer = activePlayer;
+            const fadeInPlayer = activePlayer === pA ? pB : pA;
+            activePlayer = fadeInPlayer;
+
+            fadeInPlayer.src = newSrc;
+            fadeInPlayer.volume = 0;
+            if(!isGloballyMuted) fadeInPlayer.play().catch(e=>console.log("Autoplay blocked."));
+
+            if (crossfadeInterval) clearInterval(crossfadeInterval); 
+
+            let vol = 0;
+            crossfadeInterval = setInterval(() => {
+                vol += 0.05;
+                if (vol >= 1) {
+                    clearInterval(crossfadeInterval);
+                    fadeInPlayer.volume = 1;
+                    fadeOutPlayer.pause();
+                    crossfadeInterval = null;
+                } else {
+                    fadeInPlayer.volume = vol;
+                    if (fadeOutPlayer.volume > 0.05) {
+                        fadeOutPlayer.volume = 1 - vol;
+                    } else {
+                        fadeOutPlayer.volume = 0;
+                    }
+                }
+            }, 100);
+        }
+
+        function toggleGlobalMute() {
+            const btn = document.getElementById('mute-btn');
+            isGloballyMuted = !isGloballyMuted;
+            if(isGloballyMuted) { activePlayer.pause(); btn.innerText = "Play"; }
+            else { activePlayer.play(); btn.innerText = "Pause"; }
+        }
+
+        const friendsPlaylist = ["Stalker's Tango.mp3", "It's Gonna Be Me.mp3", "Jaane Bhi De.mp3"];
+        let friendSongIndex = 0;
+
+        function triggerFriendSong() {
+            const songToPlay = friendsPlaylist[friendSongIndex];
+            playCrossfade(songToPlay, '🎵 ' + songToPlay.replace('.mp3', ''));
+            friendSongIndex = (friendSongIndex + 1) % friendsPlaylist.length; 
+        }
+
+        // --- 2. SIMPLE, RELIABLE GIFT BOX OPENER ---
+        const giftBox = document.getElementById('gift-box');
+        const overlay = document.getElementById('gift-overlay');
+        const audioHud = document.getElementById('audio-hud');
+        
+        const triggerGiftOpen = () => {
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none'; 
+            
+            playCrossfade('I Thought I Saw Your Face Today.mp3', '🎵 I Thought I Saw Your Face Today');
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                audioHud.style.display = 'flex';
+                document.body.style.overflowY = 'auto'; 
+                initScrollObservers();
+            }, 600);
+        };
+        
+        giftBox.addEventListener('click', triggerGiftOpen);
+
+        // --- 3. SCROLL PARALLAX ---
+        let isScrolling = false;
+        document.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.scrollY;
+                    document.querySelectorAll('.doodle, .floating-r').forEach(el => {
+                        el.style.setProperty('--scroll-amount', `${scrolled}px`);
+                    });
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+
+        // --- 4. 3D HOVER ---
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                const centerX = rect.width / 2, centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -15;
+                const rotateY = ((x - centerX) / centerX) * 15;
+                
+                const inner = card.querySelector('.tilt-inner');
+                if(inner) {
+                    inner.style.setProperty('--rotateX', `${rotateX}deg`);
+                    inner.style.setProperty('--rotateY', `${rotateY}deg`);
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                const inner = card.querySelector('.tilt-inner');
+                if(inner) { inner.style.setProperty('--rotateX', `0deg`); inner.style.setProperty('--rotateY', `0deg`); }
+            });
+        });
+
+        // --- 5. AUDIO SCROLL OBSERVERS ---
+        function initScrollObservers() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const song = entry.target.getAttribute('data-song');
+                        if (song) {
+                            playCrossfade(song, "🎵 " + song.replace('.mp3', ''));
+                            if (song === "Jaane Bhi De.mp3") {
+                                friendSongIndex = 0; 
+                            }
+                        }
+                    }
+                });
+            }, { root: null, threshold: 0.15 }); 
+
+            document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+        }
+
+        // --- 6. FALLING HEARTS ---
+        let heartsInterval;
+        function startHeartsLoop() {
+            if(heartsInterval) clearInterval(heartsInterval);
+            heartsInterval = setInterval(() => {
+                const usSection = document.getElementById('us');
+                const rect = usSection.getBoundingClientRect();
+                
+                if(rect.top > window.innerHeight || rect.bottom < 0) return;
+
+                const heart = document.createElement('div');
+                heart.classList.add('falling-heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+                heart.style.animationDuration = Math.random() * 4 + 4 + 's';
+                
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 8000);
+            }, 400);
+        }
+
+        // --- 7. SECURITY LOCK ---
+        const pwdInput = document.getElementById('password-input');
+        const lockScreen = document.getElementById('lock-screen');
+        const secureZone = document.getElementById('secure-zone');
+        
+        pwdInput.addEventListener('input', (e) => {
+            if (e.target.value.toLowerCase().trim() === 'riru') {
+                lockScreen.style.opacity = '0';
+                setTimeout(() => {
+                    lockScreen.style.display = 'none';
+                    secureZone.style.height = 'auto'; 
+                    secureZone.style.overflow = 'visible';
+                    startHeartsLoop(); 
+                    
+                    playCrossfade("Somethin' Stupid.mp3", "🎵 Somethin' Stupid");
+                }, 800);
+            }
+        });
+
+        // --- 8. VAULT & LIGHTBOX ---
+        const vaultGrid = document.getElementById('vault-grid');
+        for(let i = 1; i <= 39; i++) {
+            vaultGrid.innerHTML += `
+                <div class="vault-thumb" onclick="openLightbox('vault/s${i}.png')">
+                    <img src="vault/s${i}.png" loading="lazy" onerror="this.style.display='none'">
+                </div>`;
+        }
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        function openLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
+        function closeLightbox() { lightbox.classList.remove('active'); }
+    </script>
+</body>
+</html>
